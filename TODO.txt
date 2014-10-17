@@ -1,0 +1,10 @@
+
+eg. manage template expansion with a stack that we push and pop on
+the binding.
+
+set the relation, set the record, 
+then call a generic template expander
+
+then continue on rendering. 
+
+
