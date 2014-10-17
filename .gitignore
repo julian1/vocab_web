@@ -1,0 +1,17 @@
+.rake_test_cache
+.DS_Store
+.rbenv-version
+.idea
+.vagrant
+*.iml
+cache/
+**~
+# Hide rubinius files
+.rbx
+data_bags/node
+*.swp
+shared_src/
+
+# Some extra personal ignore settings
+.bundle
+
