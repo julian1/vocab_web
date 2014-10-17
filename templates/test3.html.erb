@@ -1,0 +1,90 @@
+
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 15px;
+}
+</style>
+
+
+ <script language="javascript" type="text/javascript" src="jquery.js"></script>
+
+<script type="text/javascript">
+
+
+  function edit_field(id) {
+    // using the same id for the editable field should make it easier to close, when we open 
+    // different fields
+
+    // we really want to be able to open multiple fields, which means giving the element
+    // a unique id. 
+
+    var x = $( '#' + id)[0].innerHTML ; 
+
+    var formid = 'form_' + id;
+
+    $( '#' + id).append('<textarea id="' + formid + '" rows="10" cols="100">     ' ); 
+    $( '#' + formid )[0].value = x; 
+
+//  $('#myresultform')[0].value = '';
+  // we could pass our initial value. 
+  // but we also need to be able to copy it back...
+    console.log( 'whoot update chart ' + id );
+    console.log( 'x is ' + x );
+  };
+
+  function close_field(id) {
+    var formid = 'form_' + id;
+    console.log( 'close !! ' + id );
+    $( '#' + formid).remove();
+  }
+
+  function update_field(id) {
+    var formid = 'form_' + id;
+    var value = $( '#' + formid )[0].value 
+
+    $( '#' + formid).remove();
+
+    $( '#' + id)[0].innerHTML  = value; 
+
+  }
+
+
+</script>
+
+
+<% @result = @conn.exec('select * from vocabulary_term where uid = $$http://vocab.nerc.ac.uk/collection/L22/current/TOOL0263$$') %> 
+
+
+<table style="width:70%">
+
+
+<% for @i in 0..@result.nfields - 1
+  @fname = @result.fname(@i) 
+%>
+  <tr>
+  <td> <%= @fname %> </td>
+
+  <% for @row in @result %>
+    <td> 
+      <span id="edit_<%= @fname %>">
+      <%= @row[@fname] %>  
+      </span> 
+
+      <input class="submit" type="button" value="Edit" onclick="edit_field('edit_<%= @fname %>')">
+      <input class="submit" type="button" value="Close" onclick="close_field('edit_<%= @fname %>')">
+      <input class="submit" type="button" value="Update" onclick="update_field('edit_<%= @fname %>')">
+    </td>
+  <% end %>
+
+  <td>
+  </td>
+  </tr>
+<% end %>
+</table> 
+
+
+
